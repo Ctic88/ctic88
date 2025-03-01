@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{title}}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <link rel="icon" type="image/x-icon" href="myApp/img/favicon.ico" />
+  <link rel="stylesheet" href="myApp/styles/style.css">
+
+</head>
+
+<body>
+  <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand">
+        <img src="myApp/img/WDLogo.png" alt="missing logo ..." width="100px" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link" aria-current="page" href="home">Home</a>
+          <a class="nav-link" href="history">History</a>
+          <a class="nav-link" href="techniques">Techniques</a>
+          <a class="nav-link" href="tips">Tips&Tricks</a>
+
+        </div>
+        <!-- Button trigger LOGIN modal -->
+        <button type="button" class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Login
+        </button>
+        <!-- Button trigger Sign-Up modal -->
+        <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal"
+          data-bs-target="#exampleModal_SIGN-UP">
+          Sign-Up
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Modal LOGIN -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Login form</h1>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="login">
+            <div class="mb-3">
+              <label for="userName" class="form-label">User name</label>
+              <input type="text" class="form-control" id="userName" name="userName" aria-describedby="emailHelp" />
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <input type="password" class="form-control" name="userPass" id="exampleInputPassword1" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal SIGN-UP -->
+  <div class="modal fade" id="exampleModal_SIGN-UP" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            Sign-Up form
+          </h1>
+        </div>
+        <div class="modal-body">
+          <form id="signUpForm" method="POST" action="signup">
+            <div class="mb-3">
+              <label for="signUpName" class="form-label">User name</label>
+              <input type="text" class="form-control" id="signUpName" name="signUpName" aria-describedby="emailHelp" />
+            </div>
+            <div class="mb-3">
+              <label for="signUpEmail" class="form-label">Email address</label>
+              <input type="email" class="form-control" name="signUpEmail" id="signUpEmail" required />
+          </div>           
+            <div class="mb-3">
+              <label for="signUpPass1" class="form-label">Password</label>
+              <input type="password" class="form-control" name="signUpPass1" id="signUpPass1" />
+            </div>
+            <div class="mb-3">
+              <label for="signUpPass2" class="form-label">Re-type password</label>
+              <input type="password" class="form-control" name="signUpPass2" id="signUpPass2" />
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("signUpForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+      let formData = new FormData(this);
+      fetch("signup", {
+        method: "POST",
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            alert(data.error);
+            if (data.suggestedUsername) {
+              document.getElementById("signUpName").value = data.suggestedUsername;
+              let modal = new bootstrap.Modal(document.getElementById("exampleModal_SIGN-UP"));
+              modal.show();
+            }
+          } else {
+            window.location.href = "home";
+          }
+        })
+        .catch(error => console.error("Error:", error));
+    });
+  </script>
+
+  <div class="text-center">
+    <h1 class="display-2 text-primary">"Always think like a fish, no matter how weird it gets.”</h1>
+  </div>
+
+  <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active" data-bs-interval="5000">
+        <img src="myApp/img/banner1.png" class="d-block w-100" alt="missing..." />
+      </div>
+      <div class="carousel-item" data-bs-interval="5000">
+        <img src="myApp/img/banner2.png" class="d-block w-100" alt="missing..." />
+      </div>
+      <div class="carousel-item object-fit-contain" data-bs-interval="5000">
+        <img src="myApp/img/banner3.png" class="d-block w-100" alt="missing..." />
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+      data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+      data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <div class="container mt-5">
+    <div class="row">
+      <main class="col-9">
+        <div>{{mainContent}}</div>
+      </main>
+
+      <aside class="col-3 border-start ps-5">
+        <div>{{asideContent}}</div>
+      </aside>
+    </div>
+  </div>
+
+
+
+  <div class=" mt-3 pt-3 d-flex justify-content-around">
+    <div class="card col-3">
+      <img src="myApp/img/1.jpg" viewBox="0 0 24 24">
+      <path
+        d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z">
+      </path>
+      </svg>
+      <div class="card__content">
+        <p class="card__title">Reduces Stress & Anxiety</p>
+        <p class="card__description">
+          A lot of anglers are drawn to fishing because it gives them the chance to unwind and escape the pressures of
+          daily life.
+        </p>
+      </div>
+    </div>
+    <div class="card col-3">
+      <img src="myApp/img/2.jpg" viewBox="0 0 24 24">
+      <path
+        d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z">
+      </path>
+      </svg>
+      <div class="card__content">
+        <p class="card__title">Improves Cardiovascular Health</p>
+        <p class="card__description">
+          Believe it or not, active fishing can burn up to 200 calories per hour!
+        </p>
+      </div>
+    </div>
+    <div class="card col-3">
+      <img src="myApp/img/3.jpg" viewBox="0 0 24 24">
+      <path
+        d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z">
+      </path>
+      </svg>
+      <div class="card__content">
+        <p class="card__title">Stimulates Your Brain</p>
+        <p class="card__description">
+          Fishing requires that you learn and practice a lot of different skills and techniques.
+        </p>
+      </div>
+
+    </div>
+    
+  </div>
+    <footer class="bg-dark">
+      <div class="container-fluid mt-2 pt-2 d-flex justify-content-around text-white">
+        <p class="col-3">
+          Early fishing lures were crafted out of bone, stone, or wood.
+          In prehistoric times, people used to grab fish out of the water with their bare hands—or at least they tried
+          to. With the advent of tool usage, humans began to craft hooks and lures to attract fish.
+        </p>
+        <p class="col-3">
+          The biggest fish caught on record was a great white shark!
+          In 1959, an Australian named Alfred Dean caught a great white shark that weighed 2,664 pounds. It’s the
+          largest fish caught and recorded by the International Game Fish Association.
+        </p>
+        <p class="col-3">
+          The fish’s well-being is important in competition.
+          Many competitions penalize people who bring in dead fish, so many competitors transfer their catches to an
+          aerated “livewell” tank to keep them alive while on the boat.
+          incidunt!
+        </p>
+      </div>
+
+      <div>
+        <p class="mb-0 text-light text-center py-3 mt-4">&copy; Website. All Rights Reserved.<br>2025</p>
+
+      </div>
+    </footer>
+
+
+</body>
+
+</html>
